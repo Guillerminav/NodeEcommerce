@@ -15,9 +15,6 @@ main {
   padding-top: 5rem;
 }
 
-.btn-primary {
-  
-}
 
 .badge-pill {
   margin: 0 .2rem;
@@ -135,8 +132,35 @@ main {
   background-color: transparent;
 }
 
+.container-item-container {
+  max-width: 90vw;
+  margin: auto;
+}
+
+.item-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.col-item  {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.col-item > a {
+  text-decoration: none;
+  color: #1f1f1f;
+}
+
+.text-cart-product {
+  padding: 1rem;
+}
+
 .img-thumbnail {
-  height: 80px;
+  max-width: 10vw;
 }
 
 .product-screen-info {
@@ -179,4 +203,61 @@ main {
 
 .small-container {
   max-width: 600px;
+}
+
+.checkout-steps > div {
+  border-bottom: 0.2rem solid #a0a0a0;
+  color: #a0a0a0;
+  font-size: .95rem;
+}
+
+.checkout-steps > div.active {
+  border-bottom: 0.2rem solid rgb(52,135,86);
+  color: rgb(52,135,86);
+}
+
+.btn-submit {
+  background: rgb(52,135,86);
+  background: linear-gradient(55deg, rgba(52,135,86,1) 0%, rgba(84,182,202,1) 100%);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.edit-link {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.tax-info {
+  padding: 1rem;
+  font-size: .8rem;
+  color: #1f1f1f90;
+}
+
+.titulo-tabla {
+  font-size: .8rem;
+  margin: 0;
+  padding: 0;
+}
+
+.cuerpo-tabla {
+  font-size: .8rem;
+  margin: 0;
+  padding: 0;
+}
+
+.btn-detalles {
+  font-size: .8rem;
+  padding: .3rem .5rem;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: flex-end;
+  justify-content: end;
+}
+
+.nav-item {
+  margin: 0 .4rem;
 }

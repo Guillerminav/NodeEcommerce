@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import Col from 'react-bootstrap/esm/Col'
 import Row from 'react-bootstrap/esm/Row'
 import { Helmet } from 'react-helmet-async'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import MessageBox from '../components/MessageBox'
 import { Store } from '../Store'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -54,15 +54,15 @@ const CartScreen = () => {
                             </MessageBox>
                         ) :
                         (
-                            <ListGroup>
+                            <ListGroup className="container-item-container">
                                 {cartItems.map((item) => (
                                     <ListGroup.Item key={item._id}>
-                                        <Row className="align-items-center d-flex justify-content-between flex-wrap">
-                                            <Col md={4} className="align-items-center d-flex justify-content-center">
+                                        <Row className="item-container">
+                                            <Col md={5} className="col-item">
                                                 <img src={item.image} alt={item.name} className="img-fluid rounded img-thumbnail"></img>
-                                                <Link to={`/product/${item.slug}`}>{item.name}</Link>
+                                                <Link className="text-cart-product" to={`/product/${item.slug}`}>{item.name}</Link>
                                             </Col>
-                                            <Col md={2} className="align-items-center d-flex justify-content-center">
+                                            <Col md={1} className="col-item">
                                                 <Button variant="light"
                                                 onClick={() => updateCartHandler(item, item.quantity - 1)}
                                                 disabled={item.quantity === 1}>
@@ -75,8 +75,8 @@ const CartScreen = () => {
                                                     <i className="fas fa-plus-circle"></i>
                                                 </Button>
                                             </Col>
-                                            <Col md={1} className="align-items-center d-flex justify-content-center">${item.price}</Col>
-                                            <Col md={1} className="align-items-center d-flex justify-content-center">
+                                            <Col md={1} className="col-item  ">${item.price}</Col>
+                                            <Col md={1} className="col-item  ">
                                                 <Button 
                                                 onClick={() => removeItemHandler(item)}
                                                 variant="light">
@@ -89,9 +89,9 @@ const CartScreen = () => {
                             </ListGroup>
                         )
                     }
-                </Col>
-                    <Col md={4} className="d-flex justify-content-center align-items-start">
-                        <Card>
+                </Col >
+                    <Col md={4} >
+                        <Card className="container-item-container">
                             <Card.Body>
                                 <ListGroup variant="flush">
                                     <ListGroup.Item>
@@ -104,7 +104,7 @@ const CartScreen = () => {
                                         <div className="d-grid">
                                             <Button
                                             onClick={checkoutHandler}
-                                            type="button" disabled={cartItems.length === 0}>Continuar</Button>
+                                            type="button" className="btn-submit" disabled={cartItems.length === 0}>Continuar</Button>
                                         </div>
                                     </ListGroup.Item>
                                 </ListGroup>
