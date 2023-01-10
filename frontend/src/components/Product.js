@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Rating from '../components/Rating.js'
 import { Store } from '../Store.js'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 
 const Product = (props) => {
@@ -21,12 +22,14 @@ const Product = (props) => {
         const { data } = await axios.get(`/api/products/${item._id}`)
         if (data.countInStock < quantity) {
             //window.alert('Producto fuera de stock')
+            toast.error('Fuera de stock')
             return
         }
         ctxDispatch({
             type: 'CART_ADD_ITEM', 
             payload: {...item, quantity}
         })
+        toast.success("Producto agregado")
     }
 
     return (
