@@ -74,7 +74,7 @@ const SignupScreen = () => {
                     <Form.Control type="password" required onChange={(e) => setPassword(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="password">
-                    <Form.Label>Confirmar contraseña</Form.Label>
+                    <Form.Label>Repetir contraseña</Form.Label>
                     <Form.Control type="confirmPassword" required onChange={(e) => setConfirmPassword(e.target.value)} />
                 </Form.Group>
                 <div className="mb-3">
