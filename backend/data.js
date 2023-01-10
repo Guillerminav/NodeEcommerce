@@ -17,7 +17,7 @@ const data = {
     ],
     products: [
         {
-            //_id: '1',
+            _id: '1',
             name: 'Empanadas de soja texturizada y lentejas',
             slug: 'empanadas-de-soja-texturizada-y-lentejas',
             category: 'Empanadas',
@@ -29,7 +29,7 @@ const data = {
             description: 'Empanadas de soja texturizada y lentejas. 100% vegetal, orgánico, no transgénico y sin conservantes.'
         },
         {
-            //_id: '2',
+            _id: '2',
             name: 'Hamburguesa de lentejas',
             slug: 'hamburguesa',
             category: 'Hamburguesas',
@@ -41,7 +41,7 @@ const data = {
             description: 'Hamburguesa de lentejas con pan de remolacha. 100% vegetal, orgánico, no transgénico y sin conservantes.'
         },
         {
-            //_id: '3',
+            _id: '3',
             name: 'Tarta de cebolla y paparella',
             slug: 'tarta-de-cebolla-y-paparella',
             category: 'Tartas',
@@ -53,7 +53,7 @@ const data = {
             description: 'Tarta de cebolla y paparella. 100% vegetal, orgánico, no transgénico y sin conservantes.'
         },
         {
-            //_id: '4',
+            _id: '4',
             name: 'Empanadas de paparella, tomate y ajo',
             slug: 'empanadas-de-paparella-tomate-y-ajo',
             category: 'Empanadas',
@@ -65,7 +65,7 @@ const data = {
             description: 'Empanadas de soja texturizada y lentejas. 100% vegetal, orgánico, no transgénico y sin conservantes.'
         },
         {
-            //_id: '5',
+            _id: '5',
             name: 'Empanadas de no-atún',
             slug: 'empanadas-de-no-atun',
             category: 'Empanadas',

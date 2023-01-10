@@ -1,5 +1,5 @@
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Container from 'react-bootstrap/Container'
 import {LinkContainer} from 'react-router-bootstrap'
@@ -10,7 +10,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import logo from './assets/logo_vigan.svg'
 import Badge from 'react-bootstrap/Badge'
 import { Store } from './Store.js';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CartScreen from './screens/CartScreen.js';
 import SigninScreen from './screens/SigninScreen.js';
 import SignupScreen from './screens/SignupScreen.js'
@@ -21,6 +21,8 @@ import PlaceOrderScreen from './screens/PlaceOrderScreen.js'
 import OrderScreen from './screens/OrderScreen.js'
 import OrderHistoryScreen from './screens/OrderHistoryScreen.js'
 import ProfileScreen from './screens/ProfileScreen.js'
+import axios from 'axios'
+import { getError } from './utils.js'
 
 function App() {
 
@@ -34,59 +36,104 @@ function App() {
     localStorage.removeItem('paymentMethod')
     window.location.href = '/signin'
   }
+
+  const [navOpen, setNavOpen] = useState(false)
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    const fetchCategories = async() => {
+      try {
+        const { data } = await axios.get(`/api/products/categories`)
+        setCategories(data)
+      } catch (err) {
+        toast.error(getError(err))
+      }
+    }
+    fetchCategories()
+  }, [])
   
   return (
     <BrowserRouter>
       <div className='d-flex flex-column site-container'>
         <ToastContainer position="bottom-center" limit={1} />
-        <header>
-          <Navbar className="navbar container-fluid" expand="lg" fixed="top">
-            <Container className="container-fluid">
-              <LinkContainer to="/">
-                <Navbar.Brand><img className="logo"src={logo} alt="logo"></img></Navbar.Brand>
-              </LinkContainer>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" className="btn-toggle"/>
-              <Navbar.Collapse id="basic-navbar-nav" className="nav-collapse container-fluid navbar-right">
-                <Nav className="navbar-right">
-                  <Nav.Link to="/cart" className="nav-link nav-item">
-                    <span>
-                        <i className="fas fa-shopping-cart"></i>
-                      </span>
-                      {
-                        cart.cartItems.length > 0 && (
-                          <Badge pill bg="danger" className="badge-pill">
-                            {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                          </Badge>
-                        )
-                      }
-                  </Nav.Link>
-                  <Nav.Link href="#home" className="categorias-nav nav-item">Categorias</Nav.Link>
-                  <Nav className="nav-item">
-                      {userInfo ? (
-                        <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                          <LinkContainer to="/profile">
-                            <NavDropdown.Item>Perfil</NavDropdown.Item>
-                          </LinkContainer>
-                          <LinkContainer to="/orderhistory">
-                            <NavDropdown.Item>Mis pedidos</NavDropdown.Item>
-                          </LinkContainer>
-                          <NavDropdown.Divider />
-                          <Link 
-                            className="dropdown-item"
-                            to="#signout"
-                            onClick={signoutHandler}>
-                            Cerrar sesión
-                          </Link>
-                        </NavDropdown>
-                      ) : (
-                        <Link className="nav-link" to="/signin">Ingresar</Link>
-                      )}
+
+        <Navbar collapseOnSelect expand="lg" bg="transparent" variant="light" className="navbar-main-container">
+          <Container>
+            <LinkContainer to="/">
+              <Navbar.Brand><img className="logo"src={logo} alt="logo"></img></Navbar.Brand>
+            </LinkContainer>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setNavOpen(!navOpen)}/>
+            <Navbar.Collapse id="responsive-navbar-nav" className={navOpen ? 'nav-active' : ''}>
+              <Nav className="me-auto">
+              </Nav>
+              <Nav className="nav-items-container">
+                <Nav.Item className="itemnav">
+                  <LinkContainer to ="/cart">
+                        <Nav >
+                          <span>
+                            <i className="fas fa-shopping-cart"></i>
+                          </span>
+                          {
+                            cart.cartItems.length > 0 && (
+                              <Badge pill bg="danger" className="badge-pill">
+                                {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                              </Badge>
+                            )
+                          }
+                        </Nav>
+                  </LinkContainer>
+                </Nav.Item>
+                {/* <Nav.Item className="itemnav">
+                  Categorías
+                  {categories.map((category) => (
+                  <Nav.Item key={category} className="itemnav">
+                    <LinkContainer
+                      to={{pathname: '/search', search: `?${category}`}}
+                    >
+                      <Nav.Link>{category}</Nav.Link>
+                    </LinkContainer>
+                  </Nav.Item>
+                ))}
+                </Nav.Item> */}
+                <Nav.Item className="itemnav">
+                  <Nav className="itemnav-container">
+                    <NavDropdown className="drop-container" title="Categorias" id="basic-nav-dropdown">
+                    {categories.map((category) => (
+                      <LinkContainer to={{pathname: '/search', search: `?${category}`}} >
+                        <NavDropdown.Item className="drop-item">{category}</NavDropdown.Item>
+                      </LinkContainer>
+                    ))}
+                  </NavDropdown>
                   </Nav>
-                </Nav>
-              </Navbar.Collapse>
-            </Container>
-          </Navbar>
-        </header>
+                </Nav.Item>
+                <Nav.Item className="itemnav">
+                  <Nav className="itemnav-container">
+                    {userInfo ? (
+                      <NavDropdown className="drop-container" title={userInfo.name} id="basic-nav-dropdown">
+                        <LinkContainer to="/profile">
+                              <NavDropdown.Item className="drop-item">Perfil</NavDropdown.Item>
+                            </LinkContainer>
+                            <LinkContainer to="/orderhistory">
+                              <NavDropdown.Item className="drop-item">Mis pedidos</NavDropdown.Item>
+                            </LinkContainer>
+                            <NavDropdown.Divider />
+                            <Link 
+                              className="dropdown-item"
+                              to="#signout"
+                              onClick={signoutHandler}>
+                              Cerrar sesión
+                            </Link>
+                          </NavDropdown>
+                        ) : (
+                          <Link className="nav-link" to="/signin">Ingresar</Link>
+                        )}
+                    </Nav>
+                </Nav.Item>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+
         <main>
           <Container>
             <Routes>

@@ -22,14 +22,15 @@ const Product = (props) => {
         const { data } = await axios.get(`/api/products/${item._id}`)
         if (data.countInStock < quantity) {
             //window.alert('Producto fuera de stock')
-            toast.error('Fuera de stock')
             return
         }
         ctxDispatch({
             type: 'CART_ADD_ITEM', 
             payload: {...item, quantity}
         })
-        toast.success("Producto agregado")
+        toast.success("Producto agregado", {
+            autoClose: 2000
+        })
     }
 
     return (

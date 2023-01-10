@@ -52,8 +52,7 @@ const HomeScreen = () => {
                 <title>VIGAN</title>
             </Helmet>
             <div className="destacados-container">
-                <p className="home-text">COMER SANO, RICO Y A BASE DE PLANTAS</p>
-                <p className="home-text">ES CADA VEZ MÁS FÁCIL</p>
+                <p className="home-text">COMER SANO, RICO Y A BASE DE PLANTAS ES CADA VEZ MÁS FÁCIL</p>
             </div>
             <div className="products">
                 {

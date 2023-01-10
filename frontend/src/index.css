@@ -10,18 +10,55 @@ body {
   min-height: 100vh;
 }
 
-main {
-  flex: 1;
-  padding-top: 5rem;
+.navbar-main-container {
+  position: fixed;
+  min-width: 100vw;
 }
 
+.nav-items-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+main {
+  flex: 1;
+  padding-top: 4rem;
+}
+
+.nav-active {
+  background-color: #f1f1f1;
+  padding: 2rem 0;
+}
+
+.itemnav-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-active .itemnav {
+  background-color: #1f1f1f10;
+  width: 100%;
+  border-radius: 12px;
+  padding: .2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.2rem;
+  z-index: 999;
+}
+
+.drop-container {
+  margin: .5rem;
+  min-width: 100%;
+}
 
 .badge-pill {
   margin: 0 .2rem;
-}
-
-.navbar {
-  background-color: #f1f1f1;
 }
 
 .card-title {
@@ -100,7 +137,7 @@ main {
   background: rgb(52,135,86);
   background: linear-gradient(55deg, rgba(52,135,86,1) 0%, rgba(84,182,202,1) 100%);
   padding: 0 2rem;
-  margin: 4rem auto;
+  margin: 2rem auto;
   border-radius: 16px;
   min-height: 68vh;
   display: flex;
@@ -117,10 +154,12 @@ main {
   color: #f1f1f1;
   max-width: 60vw;
   text-align: center;
+  padding: 3rem 0;
 }
 
 .fa-shopping-cart {
   color: #1f1f1f;
+  font-size: 1.2rem;
 }
 
 .categorias-nav {
@@ -252,12 +291,7 @@ main {
   padding: .3rem .5rem;
 }
 
-.navbar-right {
-  display: flex;
-  align-items: flex-end;
-  justify-content: end;
-}
 
-.nav-item {
-  margin: 0 .4rem;
-}
+
+
+
