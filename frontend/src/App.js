@@ -27,6 +27,9 @@ import SearchBox from './components/SearchBox.js'
 import ProtectedRoute from './components/ProtectedRoute.js'
 import DashboardScreen from './screens/DashboardScreen.js'
 import AdminRoute from './components/AdminRoute.js'
+import SearchScreen from './screens/SearchScreen.js'
+import ProductListScreen from './screens/ProductListScreen.js'
+import ProductEditScreen from './screens/ProductEditScreen.js'
 
 function App() {
 
@@ -92,7 +95,7 @@ function App() {
                   <Nav className="itemnav-container">
                     <NavDropdown className="drop-container" title="Categorias" id="basic-nav-dropdown">
                     {categories.map((category) => (
-                      <LinkContainer to={{pathname: '/search', search: `?${category}`}} >
+                      <LinkContainer className="drop-item-link" to={{pathname: '/search', search: `?category=${category}`}} >
                         <NavDropdown.Item className="drop-item" key={category}>{category}</NavDropdown.Item>
                       </LinkContainer>
                     ))}
@@ -129,13 +132,13 @@ function App() {
                             <LinkContainer to="/admin/dashboard">
                               <NavDropdown.Item className="drop-item">Dashboard</NavDropdown.Item>
                             </LinkContainer>
-                            <LinkContainer to="/admin/productlist">
+                            <LinkContainer to="/admin/products">
                               <NavDropdown.Item className="drop-item">Productos</NavDropdown.Item>
                             </LinkContainer>
-                            <LinkContainer to="/admin/orderlist">
+                            <LinkContainer to="/admin/orders">
                               <NavDropdown.Item className="drop-item">Pedidos</NavDropdown.Item>
                             </LinkContainer>
-                            <LinkContainer to="/admin/userlist">
+                            <LinkContainer to="/admin/users">
                               <NavDropdown.Item className="drop-item">Clientes</NavDropdown.Item>
                             </LinkContainer>
                           </NavDropdown>
@@ -152,6 +155,7 @@ function App() {
             <Routes>
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/cart" element={<CartScreen />} />
+              <Route path="/search" element={<SearchScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
               <Route path="/signup" element={<SignupScreen />} />
               <Route path="/shipping" element={<ShippingAddressScreen />} />
@@ -162,6 +166,8 @@ function App() {
               <Route path="/profile" element={<ProtectedRoute><ProfileScreen /></ProtectedRoute>} />
               {/* Admin Routes */}
               <Route path="/admin/dashboard" element={<AdminRoute><DashboardScreen /></AdminRoute>} />
+              <Route path="/admin/products" element={<AdminRoute><ProductListScreen /></AdminRoute>} />
+              <Route path="/admin/product/:id" element={<AdminRoute><ProductEditScreen /></AdminRoute>} />
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>

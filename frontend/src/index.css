@@ -125,11 +125,15 @@ main {
   justify-content: space-between;
   box-shadow: 1px 30px 26px -16px rgba(0,0,0,0.15), 1px 10px 10px -16px rgba(0,0,0,0.20);
   border-radius: 16px;
-  min-height: 24vh;
+}
+
+.card-body-title {
+  font-size: 1.1rem;
+  margin: 0;
 }
 
 .card-body-item {
-  margin: .5rem 0;
+  margin: .4rem 0;
 }
 
 .price-rating {
@@ -239,12 +243,13 @@ main {
 }
 
 .btn-add-to-cart, .btn-cart {
-  padding: 1rem 0;
-  margin: 1rem 0;
+  padding: .6rem 0;
+  margin: .4rem 0;
   background: rgb(52,135,86);
   background: linear-gradient(55deg, rgba(52,135,86,1) 0%, rgba(84,182,202,1) 100%);
   border: none;
-  font-weight: 600;
+  font-weight: 500;
+  font-size: .9rem;
 }
 
 .btn-add-to-cart:hover {
@@ -355,4 +360,111 @@ main {
 .card-body-dash {
   margin: 0;
   font-size: .9rem;
+}
+
+/* search screen */
+
+.link-item {
+  text-decoration: none;
+  color: #1f1f1f80;
+  background-color: #1f1f1f20;
+  padding: .2rem 1rem;
+  margin: 5rem 0;
+  border-radius: 50px;
+}
+
+.ul-search {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem .5rem;
+}
+
+.filtrar-por{ 
+  font-size: .8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.results-search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: .8rem;
+  gap: .5rem;
+}
+
+.text-bold {
+  color: #1f1f1f;
+  font-weight: bold;
+}
+
+.text-bold:focus {
+  color: #1f1f1f;
+  font-weight: bold;
+}
+
+.category-search {
+  font-size: .8rem;
+}
+.select-search {
+  border: .5px solid #1f1f1f30;
+  padding: .2rem .4rem;
+  border-radius: 6px;
+  margin: 0 0 0 .2rem;
+}
+
+
+/* products list */
+
+.table-products {
+  font-size: .9rem;
+}
+
+.table-id {
+  font-size: .5rem;
+  max-width: 10vw;
+  word-wrap: break-word;
+  line-height: 1
+}
+
+.create-product-btn {
+  font-size: .8rem;
+  font-weight: 500;
+}
+
+
+/* edit product screen */
+
+
+.edit-product-title {
+  border-bottom: 1px solid #1f1f1f30;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.edit-product-id {
+  font-size: 1.2rem;
+}
+
+.btn-edit {
+  font-size: .8rem;
+  padding: .3rem 0;
+}
+
+.edit-btn {
+  border: solid 1px #1f1f1f50;
+}
+
+.table-item-product{ 
+  max-width: 35vw;
+}
+
+.botones-acciones{ 
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
 }

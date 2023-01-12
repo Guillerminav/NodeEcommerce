@@ -40,7 +40,7 @@ const Product = (props) => {
             </Link>
             <Card.Body className="card-body">
                 <Link to={`/product/${product.slug}`} className="card-title card-body-item">
-                    <Card.Title>{product.name}</Card.Title>
+                    <Card.Title className="card-body-title">{product.name}</Card.Title>
                 </Link>
                 <div className="price-rating">
                     <Rating rating={product.rating} numReviews={product.numReviews}></Rating>

@@ -7,6 +7,7 @@ import productRouter from './routes/productRoutes.js'
 import userRouter from './routes/userRoutes.js'
 import orderRouter from './routes/orderRoutes.js'
 import mercadopago from 'mercadopago'
+import uploadRouter from './routes/uploadRoutes.js'
 
 mercadopago.configure({
     access_token: "APP_USR-6505705558398191-010910-d149b41eb9e60a652fdc02e510133c39-1020907984"
@@ -31,6 +32,7 @@ app.get('/api/keys/paypal', (req, res) => {
     res.send(process.env.PAYPAL_CLIENT_ID || 'sb')
 })
 
+app.use('/api/upload', uploadRouter)
 app.use('/api/seed', seedRouter)
 app.use('/api/products', productRouter)
 app.use('/api/users', userRouter)
