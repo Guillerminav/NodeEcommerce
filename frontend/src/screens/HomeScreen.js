@@ -8,6 +8,7 @@ import Product from '../components/Product.js'
 import { Helmet } from 'react-helmet-async'
 import LoadingBox from '../components/LoadingBox.js'
 import MessageBox from '../components/MessageBox.js'
+import { useInView } from 'react-intersection-observer';
 
 
 const reducer = (state, action) => {
@@ -24,6 +25,10 @@ const reducer = (state, action) => {
 }
 
 const HomeScreen = () => {
+
+    const { ref, inView } = useInView({
+        threshold: 0,
+    });
 
     const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
         products: [],
@@ -51,8 +56,8 @@ const HomeScreen = () => {
             <Helmet>
                 <title>VIGAN</title>
             </Helmet>
-            <div className="destacados-container">
-                <p className="home-text">COMER SANO, RICO Y A BASE DE PLANTAS ES CADA VEZ MÁS FÁCIL</p>
+            <div className={inView ? "destacados-container inView" : "destacados-container"}>
+                <p ref={ref} className="home-text">COMER SANO, RICO Y A BASE DE PLANTAS ES CADA VEZ MÁS FÁCIL</p>
             </div>
             <div className="products">
                 {

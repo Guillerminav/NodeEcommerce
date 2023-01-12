@@ -23,6 +23,10 @@ import OrderHistoryScreen from './screens/OrderHistoryScreen.js'
 import ProfileScreen from './screens/ProfileScreen.js'
 import axios from 'axios'
 import { getError } from './utils.js'
+import SearchBox from './components/SearchBox.js'
+import ProtectedRoute from './components/ProtectedRoute.js'
+import DashboardScreen from './screens/DashboardScreen.js'
+import AdminRoute from './components/AdminRoute.js'
 
 function App() {
 
@@ -57,19 +61,20 @@ function App() {
       <div className='d-flex flex-column site-container'>
         <ToastContainer position="bottom-center" limit={1} />
 
-        <Navbar collapseOnSelect expand="lg" bg="transparent" variant="light" className="navbar-main-container">
+        <Navbar expand="lg" className="navbar-main-container">
           <Container>
             <LinkContainer to="/">
               <Navbar.Brand><img className="logo"src={logo} alt="logo"></img></Navbar.Brand>
             </LinkContainer>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setNavOpen(!navOpen)}/>
             <Navbar.Collapse id="responsive-navbar-nav" className={navOpen ? 'nav-active' : ''}>
-              <Nav className="me-auto">
+              <Nav className={navOpen ? 'nav-active me-auto' : 'me-auto'}>
+                <SearchBox />
               </Nav>
               <Nav className="nav-items-container">
                 <Nav.Item className="itemnav">
                   <LinkContainer to ="/cart">
-                        <Nav >
+                        <Nav className="itemcarrito">
                           <span>
                             <i className="fas fa-shopping-cart"></i>
                           </span>
@@ -83,24 +88,12 @@ function App() {
                         </Nav>
                   </LinkContainer>
                 </Nav.Item>
-                {/* <Nav.Item className="itemnav">
-                  Categorías
-                  {categories.map((category) => (
-                  <Nav.Item key={category} className="itemnav">
-                    <LinkContainer
-                      to={{pathname: '/search', search: `?${category}`}}
-                    >
-                      <Nav.Link>{category}</Nav.Link>
-                    </LinkContainer>
-                  </Nav.Item>
-                ))}
-                </Nav.Item> */}
                 <Nav.Item className="itemnav">
                   <Nav className="itemnav-container">
                     <NavDropdown className="drop-container" title="Categorias" id="basic-nav-dropdown">
                     {categories.map((category) => (
                       <LinkContainer to={{pathname: '/search', search: `?${category}`}} >
-                        <NavDropdown.Item className="drop-item">{category}</NavDropdown.Item>
+                        <NavDropdown.Item className="drop-item" key={category}>{category}</NavDropdown.Item>
                       </LinkContainer>
                     ))}
                   </NavDropdown>
@@ -129,6 +122,26 @@ function App() {
                         )}
                     </Nav>
                 </Nav.Item>
+                {userInfo && userInfo.isAdmin && (
+                          <Nav.Item className="itemnav">
+                            <Nav className="itemnav-container">
+                            <NavDropdown title="Admin" id="admin-nav-dropdown" className="drop-container">
+                            <LinkContainer to="/admin/dashboard">
+                              <NavDropdown.Item className="drop-item">Dashboard</NavDropdown.Item>
+                            </LinkContainer>
+                            <LinkContainer to="/admin/productlist">
+                              <NavDropdown.Item className="drop-item">Productos</NavDropdown.Item>
+                            </LinkContainer>
+                            <LinkContainer to="/admin/orderlist">
+                              <NavDropdown.Item className="drop-item">Pedidos</NavDropdown.Item>
+                            </LinkContainer>
+                            <LinkContainer to="/admin/userlist">
+                              <NavDropdown.Item className="drop-item">Clientes</NavDropdown.Item>
+                            </LinkContainer>
+                          </NavDropdown>
+                          </Nav>
+                          </Nav.Item>
+                        )}
               </Nav>
             </Navbar.Collapse>
           </Container>
@@ -144,9 +157,11 @@ function App() {
               <Route path="/shipping" element={<ShippingAddressScreen />} />
               <Route path="/payment" element={<PaymentMethodScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
-              <Route path="/order/:id" element={<OrderScreen />} />
-              <Route path="/orderhistory" element={<OrderHistoryScreen />} />
-              <Route path="/profile" element={<ProfileScreen />} />
+              <Route path="/order/:id" element={<ProtectedRoute><OrderScreen /></ProtectedRoute>} />
+              <Route path="/orderhistory" element={<ProtectedRoute><OrderHistoryScreen /></ProtectedRoute>} />
+              <Route path="/profile" element={<ProtectedRoute><ProfileScreen /></ProtectedRoute>} />
+              {/* Admin Routes */}
+              <Route path="/admin/dashboard" element={<AdminRoute><DashboardScreen /></AdminRoute>} />
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>
