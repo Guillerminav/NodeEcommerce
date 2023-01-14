@@ -20,12 +20,19 @@ body {
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
+.nav-container {
+  width: 95%;
+}
 
 .nav-items-container {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: .5rem;
+}
+
+.toggle-navbar {
+  border: none;
 }
 
 main {
@@ -36,6 +43,11 @@ main {
 .nav-active {
   background-color: #f1f1f1;
   padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 20rem;
 }
 
 .itemnav-container {
@@ -46,16 +58,15 @@ main {
   justify-content: center;
 }
 
-.me-auto {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+#offcanvas-closebtn {
+  align-self: flex-end;
+  margin: 0 1rem 1rem 0;
 }
+
 
 .nav-active .itemnav {
   background-color: #1f1f1f10;
-  width: 85%;
+  width: 100%;
   border-radius: 12px;
   padding: 0 1rem;
   display: flex;
@@ -467,4 +478,32 @@ main {
   display: flex;
   flex-direction: column;
   gap: .5rem;
+}
+
+
+/* footer */
+
+.footer-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem 0;
+  color: #f1f1f160;
+  gap: 1rem;
+  background-color: #1f1f1f;
+  font-size: .8rem;
+}
+
+.redes-link {
+  text-decoration: none;
+  color: #f1f1f1;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.portfolio-link {
+  text-decoration: none;
+  color: #f1f1f160;
+  font-weight: 600;
 }

@@ -1,77 +1,69 @@
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
-import { toast, ToastContainer } from 'react-toastify'
+import { BrowserRouter,  Route, Routes } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Container from 'react-bootstrap/Container'
-import {LinkContainer} from 'react-router-bootstrap'
 import HomeScreen from "./screens/HomeScreen.js";
 import ProductScreen from "./screens/ProductScreen.js";
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import logo from './assets/logo_vigan.svg'
-import Badge from 'react-bootstrap/Badge'
-import { Store } from './Store.js';
-import { useContext, useEffect, useState } from 'react';
 import CartScreen from './screens/CartScreen.js';
 import SigninScreen from './screens/SigninScreen.js';
 import SignupScreen from './screens/SignupScreen.js'
-import NavDropdown from 'react-bootstrap/NavDropdown'
 import ShippingAddressScreen from './screens/ShippingAddressScreen.js'
 import PaymentMethodScreen from './screens/PaymentMethodScreen.js'
 import PlaceOrderScreen from './screens/PlaceOrderScreen.js'
 import OrderScreen from './screens/OrderScreen.js'
 import OrderHistoryScreen from './screens/OrderHistoryScreen.js'
 import ProfileScreen from './screens/ProfileScreen.js'
-import axios from 'axios'
-import { getError } from './utils.js'
-import SearchBox from './components/SearchBox.js'
 import ProtectedRoute from './components/ProtectedRoute.js'
 import DashboardScreen from './screens/DashboardScreen.js'
 import AdminRoute from './components/AdminRoute.js'
 import SearchScreen from './screens/SearchScreen.js'
 import ProductListScreen from './screens/ProductListScreen.js'
 import ProductEditScreen from './screens/ProductEditScreen.js'
+import Footer from './components/Footer.js'
+import NavbarHomemade from './components/NavbarHomemade.js'
 
 function App() {
 
-  const {state, dispatch: ctxDispatch} = useContext(Store)
-  const {cart, userInfo} = state
+  // const {state, dispatch: ctxDispatch} = useContext(Store)
+  // const {cart, userInfo} = state
 
-  const signoutHandler = () => {
-    ctxDispatch({ type: 'USER_SIGNOUT' })
-    localStorage.removeItem('userInfo')
-    localStorage.removeItem('shippingAddress')
-    localStorage.removeItem('paymentMethod')
-    window.location.href = '/signin'
-  }
+  // const signoutHandler = () => {
+  //   ctxDispatch({ type: 'USER_SIGNOUT' })
+  //   localStorage.removeItem('userInfo')
+  //   localStorage.removeItem('shippingAddress')
+  //   localStorage.removeItem('paymentMethod')
+  //   window.location.href = '/signin'
+  // }
 
-  const [navOpen, setNavOpen] = useState(false)
-  const [categories, setCategories] = useState([])
+  // const [navOpen, setNavOpen] = useState(false)
+  // const [categories, setCategories] = useState([])
 
-  useEffect(() => {
-    const fetchCategories = async() => {
-      try {
-        const { data } = await axios.get(`/api/products/categories`)
-        setCategories(data)
-      } catch (err) {
-        toast.error(getError(err))
-      }
-    }
-    fetchCategories()
-  }, [])
+  // useEffect(() => {
+  //   const fetchCategories = async() => {
+  //     try {
+  //       const { data } = await axios.get(`/api/products/categories`)
+  //       setCategories(data)
+  //     } catch (err) {
+  //       toast.error(getError(err))
+  //     }
+  //   }
+  //   fetchCategories()
+  // }, [])
   
   return (
     <BrowserRouter>
       <div className='d-flex flex-column site-container'>
         <ToastContainer position="bottom-center" limit={1} />
+        <NavbarHomemade />
 
-        <Navbar expand="lg" className="navbar-main-container">
-          <Container>
+        {/* <Navbar collapseOnSelect expand="lg" className="navbar-main-container">
+          <Container fluid>
             <LinkContainer to="/">
               <Navbar.Brand><img className="logo"src={logo} alt="logo"></img></Navbar.Brand>
             </LinkContainer>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setNavOpen(!navOpen)}/>
-            <Navbar.Collapse id="responsive-navbar-nav" className={navOpen ? 'nav-active' : ''}>
-              <Nav className={navOpen ? 'nav-active me-auto' : 'me-auto'}>
+            <Navbar.Toggle className="toggle-navbar" />
+            <Navbar.Collapse className="nav-active">
+              <Nav className="nav-active">
                 <SearchBox />
               </Nav>
               <Nav className="nav-items-container">
@@ -148,7 +140,7 @@ function App() {
               </Nav>
             </Navbar.Collapse>
           </Container>
-        </Navbar>
+        </Navbar> */}
 
         <main>
           <Container>
@@ -172,11 +164,7 @@ function App() {
             </Routes>
           </Container>
         </main>
-        <footer>
-          <div className='text-center'>
-            All rights reserved
-          </div>
-        </footer>
+        <Footer />
       </div>
     </BrowserRouter>
   );
