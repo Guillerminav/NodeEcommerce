@@ -7,6 +7,14 @@ import { isAuth, isAdmin } from '../utils.js'
 
 const orderRouter = express.Router()
 
+orderRouter.get('/',
+    isAuth,
+    isAdmin,
+    expressAsyncHandler(async(req, res) => {
+        const orders = await Order.find().populate('user', 'name')
+        res.send(orders)
+}))
+
 orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {
     const newOrder = new Order({
         orderItems: req.body.orderItems.map((x) => ({...x, product: x._id})),
@@ -88,6 +96,22 @@ orderRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
 }))
 
 orderRouter.put(
+    '/:id/deliver',
+    isAuth,
+    expressAsyncHandler(async (req, res) => {
+        const order = await Order.findById(req.params.id)
+        if (order) {
+            order.isDelivered = true
+            order.deliveredAt = Date.now()
+            await order.save()
+            res.send({ message: 'Pedido enviado' })
+        } else {
+            res.status(404).send({ message: 'Pedido no encontrado' })
+        }
+    })
+)
+
+orderRouter.put(
     '/:id/pay',
     isAuth,
     expressAsyncHandler(async (req, res) => {
@@ -109,6 +133,18 @@ orderRouter.put(
     })
 )
 
+orderRouter.delete('/:id',
+    isAuth,
+    isAdmin,
+    expressAsyncHandler(async(req, res) => {
+        const order = await Order.findById(req.params.id)
+        if(order) {
+            await order.remove()
+            res.send({ message: 'Pedido eliminado' })
+        } else{ 
+            res.status(404).send({ message: 'Pedido no encontrado' })
+        }
+    }))
 
 
 export default orderRouter

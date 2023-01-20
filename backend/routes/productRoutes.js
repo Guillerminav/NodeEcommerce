@@ -67,7 +67,7 @@ productRouter.delete(
             res.status(404).send({ message: 'No se encuentra el producto' })
         }
     })
-    )
+)
 
 const PAGE_SIZE = 8
 

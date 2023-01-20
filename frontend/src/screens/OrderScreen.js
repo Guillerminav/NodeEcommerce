@@ -13,6 +13,7 @@ import Card from 'react-bootstrap/Card'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import Button from 'react-bootstrap/Button'
 
 
 function reducer(state, action) {
@@ -31,6 +32,14 @@ function reducer(state, action) {
             return {...state, loadingPay: false, errorPay: action.payload}
         case 'PAY_RESET':
             return {...state, loadingPay: false, successPay: false}
+        case 'DELIVER_REQUEST':
+            return {...state, loadingDeliver: true}
+        case 'DELIVER_SUCCESS':
+            return {...state, loadingDeliver: false, successDeliver: true}
+        case 'DELIVER_FAIL':
+            return {...state, loadingDeliver: false}
+        case 'DELIVER_RESET':
+            return {...state, loadingDeliver: false, successDeliver: false}
         default:
             return state
     }
@@ -46,7 +55,7 @@ const OrderScreen = () => {
 
     const navigate = useNavigate()
 
-    const [{ loading, error, order, successPay, loadingPay }, dispatch] = useReducer(reducer, {
+    const [{ loading, error, order, successPay, loadingPay, loadingDeliver, successDeliver }, dispatch] = useReducer(reducer, {
         loading: true,
         order: {},
         error: '',
@@ -111,10 +120,13 @@ const OrderScreen = () => {
         if (!userInfo) {
             return navigate('/login')
         }
-        if (!order._id || successPay || (order._id && order._id !== orderId)) {
+        if (!order._id || successPay || successDeliver || (order._id && order._id !== orderId)) {
             fetchOrder()
             if (successPay) {
                 dispatch({ type: 'PAY_RESET' })
+            }
+            if (successDeliver) {
+                dispatch({ type: 'DELIVER_RESET' })
             }
         } else {
             const loadPayPalScript = async() => {
@@ -132,7 +144,43 @@ const OrderScreen = () => {
             }
             loadPayPalScript()
         }
-    }, [order, userInfo, orderId, navigate, paypalDispatch, successPay])
+    }, [order, userInfo, orderId, navigate, paypalDispatch, successPay, successDeliver])
+
+    const deliverOrderHandler = async() => {
+        try {
+            dispatch({ type: 'DELIVER_REQUEST' })
+            const { data } = await axios.put(
+                `/api/orders/${order._id}/deliver`,
+                {},
+                {
+                    headers: { authorization: `Titular ${userInfo.token}` }
+                }
+            )
+            dispatch({ type: 'DELIVER_SUCCESS', payload: data })
+            toast.success('Pedido entregado')
+        } catch(err) {
+            toast.error(getError(err))
+            dispatch({ type: 'DELIVER_FAIL' })
+        }
+    }
+
+    const payedOrderHandler = async() => {
+        try {
+            dispatch({ type: 'PAY_REQUEST' })
+            const { data } = await axios.put(
+                `/api/orders/${order._id}/pay`,
+                {},
+                {
+                    headers: { authorization: `Titular ${userInfo.token}` }
+                }
+            )
+            dispatch({ type: 'PAY_SUCCESS', payload: data })
+            toast.success('Pedido pagado')
+        } catch(err) {
+            toast.error(getError(err))
+            dispatch({ type: 'PAY_FAIL' })
+        }
+    }
 
     return (
         loading ? (
@@ -236,6 +284,26 @@ const OrderScreen = () => {
                                                     </div>
                                                 )}
                                                 {loadingPay && <LoadingBox></LoadingBox>}
+                                            </ListGroup.Item>
+                                        )}
+                                        {userInfo.isAdmin && !order.isPaid && (
+                                            <ListGroup.Item>
+                                                {loadingPay && <LoadingBox></LoadingBox>}
+                                                <div className="d-grid">
+                                                    <Button type="button" onClick={payedOrderHandler}>
+                                                        Marcar como pagado
+                                                    </Button>
+                                                </div>
+                                            </ListGroup.Item>
+                                        )}
+                                        {userInfo.isAdmin && !order.isDelivered && (
+                                            <ListGroup.Item>
+                                                {loadingDeliver && <LoadingBox></LoadingBox>}
+                                                <div className="d-grid">
+                                                    <Button type="button" onClick={deliverOrderHandler}>
+                                                        Marcar como enviado
+                                                    </Button>
+                                                </div>
                                             </ListGroup.Item>
                                         )}
                                 </ListGroup>

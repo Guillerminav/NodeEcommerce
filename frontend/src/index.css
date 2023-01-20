@@ -324,13 +324,14 @@ main {
 }
 
 .cuerpo-tabla {
-  font-size: .8rem;
+  font-size: .75rem;
   margin: 0;
   padding: 0;
+  line-height: 1.2;
 }
 
 .btn-detalles {
-  font-size: .8rem;
+  font-size: .60rem;
   padding: .3rem .5rem;
 }
 
