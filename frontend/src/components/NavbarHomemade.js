@@ -88,7 +88,7 @@ const NavbarHomemade = () => {
                         <Nav className="itemnav-container">
                             <NavDropdown className="drop-container" title="Categorias" id="basic-nav-dropdown">
                             {categories.map((category) => (
-                            <LinkContainer key={category} className="drop-item-link" to={{pathname: '/search', search: `?category=${category}`}} >
+                            <LinkContainer key={category} className="drop-item-link" to={{pathname: '/search', search: `category=${category}`}} >
                                 <NavDropdown.Item className="drop-item" key={category}>{category}</NavDropdown.Item>
                             </LinkContainer>
                             ))}

@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet-async'
 import LoadingBox from '../components/LoadingBox.js'
 import MessageBox from '../components/MessageBox.js'
 import { useInView } from 'react-intersection-observer';
+import WhatsApp from '../components/WhatsApp.js'
 
 
 const reducer = (state, action) => {
@@ -56,6 +57,7 @@ const HomeScreen = () => {
             <Helmet>
                 <title>VIGAN</title>
             </Helmet>
+            <WhatsApp />
             <div className={inView ? "destacados-container inView" : "destacados-container"}>
                 <p ref={ref} className="home-text">COMER SANO, RICO Y A BASE DE PLANTAS ES CADA VEZ MÁS FÁCIL</p>
             </div>

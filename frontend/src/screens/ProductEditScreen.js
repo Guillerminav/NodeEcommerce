@@ -8,6 +8,7 @@ import LoadingBox from '../components/LoadingBox.js'
 import MessageBox from '../components/MessageBox.js'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import ListGroup from 'react-bootstrap/ListGroup'
 import { toast } from 'react-toastify'
 
 const reducer = (state, action) => {
@@ -52,6 +53,7 @@ const ProductEditScreen = () => {
     const [slug, setSlug] = useState('')
     const [price, setPrice] = useState('')
     const [image, setImage] = useState('')
+    const [images, setImages] = useState([])
     const [category, setCategory] = useState('')
     const [countInStock, setCountInStock] = useState('')
     const [description, setDescription] = useState('')
@@ -65,6 +67,7 @@ const ProductEditScreen = () => {
                 setSlug(data.slug)
                 setPrice(data.price)
                 setImage(data.image)
+                setImages(data.images)
                 setCategory(data.category)
                 setCountInStock(data.countInStock)
                 setDescription(data.description)
@@ -92,6 +95,7 @@ const ProductEditScreen = () => {
                     slug,
                     price,
                     image,
+                    images,
                     category,
                     countInStock,
                     description
@@ -114,7 +118,7 @@ const ProductEditScreen = () => {
         }
     }
 
-    const uploadFileHandler = async (e) => {
+    const uploadFileHandler = async (e, forImages) => {
         const file = e.target.files[0]
         const bodyFormData = new FormData()
         bodyFormData.append('file', file)
@@ -127,14 +131,26 @@ const ProductEditScreen = () => {
                 }
             })
             dispatch({ type: 'UPLOAD_SUCCESS' })
-            toast.success('Imagen agregada', {
-                autoClose: 1000
+            
+            if (forImages) {
+                setImages([...images, data.secure_url])
+            } else {
+                setImage(data.secure_url)
+            }
+            toast.success('Imagen subida. Hacé click en actualizar para aplicar los cambios.', {
+                autoClose: 2000
             })
-            setImage(data.secure_url)
         } catch (err) {
             toast.error(getError(err))
             dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) })
         }
+    }
+
+    const deleteFileHandler = async(fileName) => {
+        setImages(images.filter((x) => x !== fileName))
+        toast.success('Imagen eliminada. Hacé click en actualizar para aplicar los cambios.', {
+            autoClose: 2000
+        })
     }
 
     return (
@@ -188,6 +204,25 @@ const ProductEditScreen = () => {
                     <Form.Group className="mb-3" controlId="imageFile">
                         <Form.Label>Subir foto</Form.Label>
                         <Form.Control type="file" onChange={uploadFileHandler} />
+                        {loadingUpload && <LoadingBox></LoadingBox>}
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="additionalImage">
+                        <Form.Label>Fotos adicionales</Form.Label>
+                        {images.length === 0 && <MessageBox>No hay fotos</MessageBox>}
+                        <ListGroup variant="flush">
+                            {images.map((x) => (
+                                <ListGroup.Item key={x}>
+                                    {x}
+                                    <Button variant="light" onClick={() => deleteFileHandler(x)}>
+                                        <i className="fa fa-times-circle"></i>
+                                    </Button>
+                                </ListGroup.Item>
+                            ))}
+                        </ListGroup>
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="additionalImageFile">
+                        <Form.Label>Subir fotos adicionales</Form.Label>
+                        <Form.Control type="file" onChange={(e) => uploadFileHandler(e, true)} />
                         {loadingUpload && <LoadingBox></LoadingBox>}
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="category">

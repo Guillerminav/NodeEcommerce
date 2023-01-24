@@ -51,7 +51,11 @@ const Rating = (props) => {
                     : 'far fa-star'
                     }></i>
             </span>
-            <span>{numReviews} reviews</span>
+            {numReviews > 1 ? (
+                <span> {numReviews} comentarios</span>
+            ) : (
+                <span> {numReviews} comentario</span>
+            )}
         </div>
     )
 }

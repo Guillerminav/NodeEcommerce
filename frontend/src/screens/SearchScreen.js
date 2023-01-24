@@ -96,16 +96,14 @@ const SearchScreen = () => {
     }, [dispatch]);
 
         
-    const getFilterUrl = (filter) => {
+    const getFilterUrl = (filter, skipPathname) => {
         const filterPage = filter.page || page;
         const filterCategory = filter.category || category;
         const filterQuery = filter.query || query;
         const filterPrice = filter.price || price;
         const sortOrder = filter.order || order;
-        return {
-            pathname: '/search',
-            search: `?category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&order=${sortOrder}&page=${filterPage}`
-        };
+        return `${skipPathname ? '' : '/search?'}category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&order=${sortOrder}&page=${filterPage}
+        }`;
     };
 
 
@@ -221,7 +219,10 @@ const SearchScreen = () => {
                                 <LinkContainer
                                     key={x + 1}
                                     className="mx-1"
-                                    to={getFilterUrl({ page: x + 1 })}
+                                    to={{
+                                        pathname: '/search',
+                                        seacrh: getFilterUrl({ page: x + 1 }, true),
+                                        }}
                                 >
                                     <Button
                                     className={Number(page) === x + 1 ? 'text-bold' : ''}

@@ -244,6 +244,16 @@ main {
   max-width: 10vw;
 }
 
+.row-container {
+  gap: 1rem;
+}
+
+.product-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
 .product-screen-info {
   display: flex;
   justify-content: space-between;
@@ -251,6 +261,11 @@ main {
   background-color: #f1f1f1;
   min-height: 40vh;
   border-radius: 16px;
+}
+
+.reviews-container {
+  width: 100%;
+  font-size: .9rem;
 }
 
 .btn-add-to-cart, .btn-cart {
@@ -507,4 +522,37 @@ main {
   text-decoration: none;
   color: #f1f1f160;
   font-weight: 600;
+}
+
+button.thumbnail {
+  padding: 0;
+}
+
+.images-container {
+  gap: .6rem;
+}
+
+.images-container2 {
+  display: flex;
+  max-width: 5rem;
+  padding: 0;
+  gap: 1rem;
+}
+
+.images-image {
+  width: 100%;
+
+}
+
+/* floating whatsapp */
+
+.wpp-container {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: inherit;
+}
+
+.wpp-container i {
+  font-size: 3rem;
 }
